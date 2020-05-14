@@ -14,7 +14,7 @@ def get_nirvana_tx_list(nirvana_gff):
             gff_transcript = None
             gff_tag = ""
 
-            fields = line.strip().split("\t")
+            fields = line.decode().strip().split("\t")
             record_type = fields[2]
             if not record_type == "transcript":
                 continue
@@ -64,10 +64,11 @@ def check_transcripts(query_tx_list, nirvana_tx_list):
             missing.add(tx)
 
     if missing:
-        print "\nFAILED"
-        print "\n".join(missing)
+        print("\nMissing:")
+        print("\n".join(missing))
+        print("\nFAILED")
     else:
-        print "\nPASSED - All transcripts present"
+        print("\nPASSED - All transcripts present")
 
 def main(genes2transcripts, nirvana_gff):
     nirvana_tx_list = get_nirvana_tx_list(nirvana_gff)
