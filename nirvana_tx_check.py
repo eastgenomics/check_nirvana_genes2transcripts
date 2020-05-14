@@ -1,6 +1,7 @@
 import sys
 import gzip
 
+
 def get_nirvana_tx_list(nirvana_gff):
     """
     Extract a list of transcripts from a Nirvana RefSeq gff.
@@ -27,12 +28,13 @@ def get_nirvana_tx_list(nirvana_gff):
                 key, value = field.split(" ")
 
                 if key == "transcript_id" and value.startswith('"NM_'):
-                    gff_transcript = value.replace('"','')
+                    gff_transcript = value.replace('"', '')
                     nirvana_tx_set.add(gff_transcript)
 
     nirvana_tx_list = list(nirvana_tx_set)
 
     return nirvana_tx_list
+
 
 def get_g2t_tx_list(genes2transcripts):
     """
@@ -43,19 +45,21 @@ def get_g2t_tx_list(genes2transcripts):
     with open(genes2transcripts) as g2t_fh:
         for line in g2t_fh:
             tx = line.strip().split()[-1]
-            assert(tx.startswith("NM_")), "Transcript {} not RefSeq, aborting!".format(tx)
+            assert(tx.startswith("NM_")),\
+                "Transcript {} not RefSeq, aborting!".format(tx)
             g2t_tx_set.add(tx)
 
     g2t_tx_list = list(g2t_tx_set)
 
     return g2t_tx_list
 
+
 def check_transcripts(query_tx_list, nirvana_tx_list):
     """
     For each transcript in query list, report if present in nirvana list
     """
     missing = set()
-    
+
     for tx in query_tx_list:
         if tx in nirvana_tx_list:
             print("\t".join([tx, "Present"]))
@@ -70,10 +74,12 @@ def check_transcripts(query_tx_list, nirvana_tx_list):
     else:
         print("\nPASSED - All transcripts present")
 
+
 def main(genes2transcripts, nirvana_gff):
     nirvana_tx_list = get_nirvana_tx_list(nirvana_gff)
     g2t_tx_list = get_g2t_tx_list(genes2transcripts)
     check_transcripts(g2t_tx_list, nirvana_tx_list)
+
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
