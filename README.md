@@ -1,5 +1,7 @@
 This script is used to check that all transcripts present in genes2transcripts are available in Nirvana RefSeq annotation cache.
 
+Example input files are provided to demonstrate success / failure
+
 ```
 Usage:
 nirvana_tx_check.py genes2transcripts_filepath nirvana_refseq_cache_filepath
