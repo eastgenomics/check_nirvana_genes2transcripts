@@ -11,9 +11,6 @@ def get_nirvana_tx_list(nirvana_gff):
     with gzip.open(nirvana_gff) as nir_fh:
 
         for line in nir_fh:
-            gff_gene_name = None
-            gff_transcript = None
-            gff_tag = ""
 
             fields = line.decode().strip().split("\t")
             record_type = fields[2]
@@ -38,7 +35,7 @@ def get_nirvana_tx_list(nirvana_gff):
 
 def get_g2t_tx_list(genes2transcripts):
     """
-    Extract a list of transcritps from a genes2transcripts file
+    Extract a list of transcripts from a genes2transcripts file
     """
     g2t_tx_set = set()
 
